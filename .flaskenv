@@ -1,0 +1,4 @@
+#FLASK_APP=app.py
+#FLASK_APP=hello.py
+FLASK_APP=project
+FLASK_DEBUG=1
