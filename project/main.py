@@ -1,16 +1,18 @@
 from flask import Blueprint, render_template
-from flask_login import login_required, current_user
-from . import db
+from flask_login import current_user
+# from . import db
 
-main = Blueprint('main', __name__)
+main_bp = Blueprint('main', __name__)
 
 
-@main.route('/')
+@main_bp.route('/')
 def index():
     return render_template('index.html')
 
 
-@main.route('/profile')
-@login_required
+@main_bp.route('/profile')
 def profile():
-    return render_template('profile.html', name=current_user.name)
+    if current_user.is_authenticated:
+        return render_template('profile.html', name=current_user.name)
+    else:
+        return render_template('login.html')
