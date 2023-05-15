@@ -5,6 +5,7 @@ from flask_login import LoginManager
 db = SQLAlchemy()
 login_manager = LoginManager()
 
+
 def create_app():
     app = Flask(__name__)
 
@@ -16,21 +17,25 @@ def create_app():
 
     db.init_app(app)
     login_manager.init_app(app)
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = 'app.routers.users.login'
 
-    from .models import User
+    from app.models.users import User
 
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    from .auth import auth_bp
-    app.register_blueprint(auth_bp)
+    from app.routers.users import users_bp
+    app.register_blueprint(users_bp)
 
-    from .main import main_bp
-    app.register_blueprint(main_bp)
+    from app.routers.posts import posts_bp
+    app.register_blueprint(posts_bp)
+
+    # from app.routers.comments import comments_bp
+    # app.register_blueprint(comments_bp)
 
     with app.app_context():
+        db.drop_all()
         db.create_all()
 
     return app
