@@ -1,10 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  Flask Login Example
-</h1>
-<h2 class="subtitle">
-  Easy authentication and authorization in Flask.
-</h2>
+<div class="column is-8 is-offset-2">
+    <h1 class="title">Welcome to BlogApp</h1>
+    {% if not posts %}
+    <h1 class="title">Sorry, you have no Posts!</h1>
+    {% endif %}
+    {% if posts %}
+    <div class="box has-text-left">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="notification is-danger">
+            {{ messages[0] }}
+        </div>
+        {% endif %}
+        {% endwith %}
+        {% for post in posts %}
+        <a class="label index-post-label" href="{{ url_for('posts.post', id=post.id) }}">{{ post.title }}</a>
+        {% if show_actions %}
+        <a class="button is-warning index-post-button" href="{{ url_for('posts.edit', id=post.id) }}">Edit</a>
+        <a class="button is-danger index-post-button" href="{{ url_for('posts.delete', id=post.id) }}">Delete</a>
+        {% endif %}
+        <div class="create-date-block">
+            <span class="create-date">{{ post.created_at.strftime("%Y-%m-%d %H:%M:%S") }}</span>
+        </div>
+        <hr class="post-line">
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
 {% endblock %}

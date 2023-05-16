@@ -17,7 +17,7 @@ def create_app():
 
     db.init_app(app)
     login_manager.init_app(app)
-    login_manager.login_view = 'app.routers.users.login'
+    login_manager.login_view = 'users.login'
 
     from app.models.users import User
 
@@ -31,11 +31,11 @@ def create_app():
     from app.routers.posts import posts_bp
     app.register_blueprint(posts_bp)
 
-    # from app.routers.comments import comments_bp
-    # app.register_blueprint(comments_bp)
+    from app.routers.comments import comments_bp
+    app.register_blueprint(comments_bp)
 
     with app.app_context():
-        db.drop_all()
+        # db.drop_all()
         db.create_all()
 
     return app
