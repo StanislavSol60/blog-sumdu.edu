@@ -17,7 +17,7 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            return redirect(url_for('users.profile'))
+            return redirect(url_for('posts.my_posts'))
         flash('Invalid email or password')
     return render_template('login.html', title='Sign In', form=form)
 

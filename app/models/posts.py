@@ -1,5 +1,5 @@
 from datetime import datetime
-from .. import db
+from app import db
 
 
 class Post(db.Model):
@@ -9,4 +9,4 @@ class Post(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     author = db.relationship('User', backref='posts', lazy=True)
-    # comments = db.relationship('Comment', backref='post', lazy=True)
+    comments = db.relationship('Comment', backref='post', lazy=True)

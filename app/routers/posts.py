@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import current_user, login_required
 from app import db
 from app.forms.posts import PostForm
+from app.forms.comments import CommentForm
 from app.models.posts import Post
 
 posts_bp = Blueprint('posts', __name__)
@@ -13,14 +14,24 @@ def index():
     return render_template('index.html', posts=posts)
 
 
+@posts_bp.route('/posts')
+@login_required
+def my_posts():
+    posts = Post.query.filter_by(author_id=current_user.id).all()
+    return render_template('index.html', posts=posts, show_actions=True)
+
+
 @posts_bp.route('/<int:id>')
 def post(id):
     post = Post.query.filter_by(id=id).first()
     if not post:
         flash('The post was not found!')
-        return redirect(url_for('index'))
-    else:
-        return render_template('post.html', post=post)
+        return redirect(url_for('posts.index'))
+    form = PostForm()
+    comment_form = CommentForm()
+    form.title.data = post.title
+    form.content.data = post.content
+    return render_template('post.html', form=form, post=post, comment_form=comment_form, current_user=current_user)
 
 
 @posts_bp.route('/create', methods=('GET', 'POST'))
@@ -32,7 +43,7 @@ def create():
         db.session.add(post)
         db.session.commit()
         flash('Your post has been created!')
-        return redirect(url_for('index'))
+        return redirect(url_for('posts.index'))
     return render_template('create.html', form=form)
 
 
@@ -42,7 +53,7 @@ def edit(id):
     post = Post.query.filter_by(id=id).first()
     if not post:
         flash('The post was not found!')
-        return redirect(url_for('index'))
+        return redirect(url_for('posts.index'))
 
     form = PostForm()
     if form.validate_on_submit():
@@ -50,22 +61,24 @@ def edit(id):
         post.content = form.content.data
         db.session.commit()
         flash('Your post has been updated!', 'success')
-        return redirect(url_for('index'))
+        return redirect(url_for('posts.my_posts'))
 
+    comment_form = CommentForm()
     form.title.data = post.title
     form.content.data = post.content
-    return render_template('profile.html', title='Edit Profile', form=form)
+    return render_template('post.html', title='Edit Post', form=form, post=post, comment_form=comment_form, current_user=current_user, edit=True)
 
 
-@posts_bp.route('/<int:id>/delete', methods=('POST',))
+@posts_bp.route('/<int:id>/delete')
 @login_required
 def delete(id):
     post = Post.query.filter_by(id=id).first()
     if not post:
         flash('The post was not found!')
-        return redirect(url_for('index'))
+        return redirect(url_for('posts.my_posts'))
 
+    title = post.title
     db.session.delete(post)
     db.session.commit()
-    flash('"{}" was successfully deleted!'.format(post['title']))
-    return redirect(url_for('index'))
+    flash('"{}" was successfully deleted!'.format(title))
+    return redirect(url_for('posts.my_posts'))
