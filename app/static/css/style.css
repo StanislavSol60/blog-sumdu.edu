@@ -1,5 +1,12 @@
 .post-textarea {
-    min-height: 300px !important;
+    min-height: 200px !important;
+}
+.post-input[readonly] {
+  border: none;
+}
+
+.post-textarea[readonly] {
+  border: none;
 }
 
 .gender-radio {

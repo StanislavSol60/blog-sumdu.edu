@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateField, \
+from wtforms import StringField, PasswordField, BooleanField, DateField, \
     RadioField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Optional, ValidationError
 from datetime import date
@@ -17,7 +17,16 @@ class SignupForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=80)])
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(), EqualTo('password', message='Passwords must match')])
-    submit = SubmitField('Sign Up')
+
+
+class ForgotPasswordForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('New Password', validators=[DataRequired(), Length(min=8, max=80)])
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[DataRequired(), EqualTo('password', message='Passwords must match')])
 
 
 class ProfileForm(FlaskForm):
@@ -25,7 +34,6 @@ class ProfileForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email(message='Invalid email'), Length(max=50)])
     date_of_birth = DateField('Date of Birth', format='%Y-%m-%d', validators=[Optional()])
     gender = RadioField('Gender', choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other')], validators=[Optional()])
-    submit = SubmitField('Update Profile')
 
     def validate_date_of_birth(self, field):
         if field.data:

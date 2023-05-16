@@ -12,7 +12,7 @@
             <div class="field">
                 <label class="label">Title</label>
                 <div class="control">
-                    {{ form.title(class="input is-medium" , placeholder="Title") }}
+                    {{ form.title(class="input post-input is-medium" , placeholder="Title") }}
                 </div>
             </div>
             <div class="field">
@@ -27,7 +27,7 @@
         <div class="field">
             <label class="label">Title</label>
             <div class="control">
-                {{ form.title(class="input is-medium" , readonly="readonly") }}
+                {{ form.title(class="input post-input is-medium" , readonly="readonly") }}
             </div>
         </div>
         <div class="field">
@@ -52,10 +52,11 @@
         </form>
         {% endif %}
         <hr class="post-line">
-        {% for comment in post.comments %}
+        {% for comment in post.comments|sort(attribute='created_at', reverse=True) %}
         <div class="box">
             <p>{{ comment.content }}</p>
-            <p class="has-text-right">Posted by: {{ comment.author }} at {{ comment.created_at }}</p>
+            <p class="has-text-right">{{ comment.author.name }} at {{ comment.created_at.strftime("%Y-%m-%d
+                %H:%M:%S") }}</p>
         </div>
         {% endfor %}
     </div>
