@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-8 is-offset-2">
+    {% if title %}
+    <h3 class="title">{{ title }}</h3>
+    {% endif %}
+    <div class="box has-text-left">
+        {% if edit %}
+        <form method="POST" action="{{ url_for('posts.edit', id=post.id) }}">
+            {{ form.csrf_token }}
+            <div class="field">
+                <label class="label">Title</label>
+                <div class="control">
+                    {{ form.title(class="input post-input is-medium" , placeholder="Title") }}
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Content</label>
+                <div class="control">
+                    {{ form.content(class="textarea post-textarea is-medium", placeholder="Post content") }}
+                </div>
+            </div>
+            <button class="button is-block is-info is-medium">Update Post</button>
+        </form>
+        {% else %}
+        <div class="field">
+            <label class="label">Title</label>
+            <div class="control">
+                {{ form.title(class="input post-input is-medium" , readonly="readonly") }}
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Content</label>
+            <div class="control">
+                {{ form.content(class="textarea post-textarea is-medium", readonly="readonly") }}
+            </div>
+        </div>
+        {% endif %}
+        <!-- Add comment section -->
+        {% if current_user.is_authenticated %}
+        <hr class="post-line">
+        <form method="POST" action="{{ url_for('comments.add_comment', id=post.id) }}">
+            {{ comment_form.csrf_token }}
+            <div class="field">
+                <label class="label">Add Comment</label>
+                <div class="control">
+                    {{ comment_form.content(class="textarea is-medium") }}
+                </div>
+            </div>
+            <button class="button is-block is-info is-medium">Add Comment</button>
+        </form>
+        {% endif %}
+        <hr class="post-line">
+        {% for comment in post.comments|sort(attribute='created_at', reverse=True) %}
+        <div class="box">
+            <p>{{ comment.content }}</p>
+            <p class="has-text-right">{{ comment.author.name }} at {{ comment.created_at.strftime("%Y-%m-%d
+                %H:%M:%S") }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

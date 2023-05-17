@@ -1,0 +1,48 @@
+.post-textarea {
+    min-height: 200px !important;
+}
+.post-input[readonly] {
+  border: none;
+}
+
+.post-textarea[readonly] {
+  border: none;
+}
+
+.gender-radio {
+  font-size: 1.5rem;
+  display: flex;
+}
+
+.gender-radio input[type="radio"] {
+  font-size: 1.5rem;
+  margin-left: 5px;
+}
+
+.index-post-label {
+    margin-bottom: 0 !important;
+    font-size: 1.75rem;
+    cursor: pointer;
+    color: #3273dc !important;
+}
+.index-post-label:hover  {
+    text-decoration: underline
+}
+
+.index-post-button {
+    width: 75px
+}
+
+.post-line {
+    background-color: #00d1b2;
+}
+
+.create-date-block {
+  display: block;
+}
+
+.create-date {
+    font-size: 0.85rem;
+}
+
+
