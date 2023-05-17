@@ -15,7 +15,7 @@
     {% endif %}
     {% if posts %}
     <div class="box has-text-left">
-        {% for post in posts %}
+        {% for post in posts|sort(attribute='created_at', reverse=True) %}
         <a class="label index-post-label" href="{{ url_for('posts.post', id=post.id) }}">{{ post.title }}</a>
         {% if show_actions %}
         <a class="button is-warning index-post-button" href="{{ url_for('posts.edit', id=post.id) }}">Edit</a>
