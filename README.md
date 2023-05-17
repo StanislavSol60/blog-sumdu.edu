@@ -7,8 +7,7 @@ Solonina Stanislav IH.m-26
 2. Clone the repository:
 git clone https://github.com/StanislavSol60/blog-sumdu.edu.git
 
-3. Navigate to the project directory:
-cd flask-project
+3. Navigate to the project directory
 
 4. Set up a virtual environment (optional but recommended):
 python -m venv venv
