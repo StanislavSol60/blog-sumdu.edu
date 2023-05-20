@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_mail import Mail
+from dotenv import load_dotenv
 import os
 
 db = SQLAlchemy()
@@ -9,7 +10,9 @@ login_manager = LoginManager()
 mail = Mail()
 
 
-def create_app():
+def create_app(config_name='default'):
+    load_dotenv('.flaskenv')
+
     app = Flask(__name__)
 
     app.config.from_mapping(
@@ -23,6 +26,15 @@ def create_app():
         MAIL_USE_TLS=True,
         MAIL_USE_SSL=False
     )
+
+    if config_name == 'testing':
+        app.config.from_mapping(
+            SQLALCHEMY_DATABASE_URI=os.getenv('SQLALCHEMY_TEST_DATABASE_URI'),
+            SERVER_NAME=os.getenv('SERVER_NAME'),
+            APPLICATION_ROOT=os.getenv('APPLICATION_ROOT'),
+            TESTING=True,
+            WTF_CSRF_ENABLED=False
+        )
 
     db.init_app(app)
     mail.init_app(app)
@@ -45,7 +57,6 @@ def create_app():
     app.register_blueprint(comments_bp)
 
     with app.app_context():
-        # db.drop_all()
         db.create_all()
 
     return app
