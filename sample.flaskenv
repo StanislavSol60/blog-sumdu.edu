@@ -12,7 +12,10 @@ MAIL_SERVER='smtp.mailtrap.io'
 MAIL_PORT=2525
 MAIL_USERNAME='your-mailtrap-username'
 MAIL_PASSWORD='your-mailtrap-password'
-MAIL_USE_TLS=True
-MAIL_USE_SSL=False
 
 MAIL_SENDER='testflaskblog@gmail.com'
+
+#testing credentials
+SQLALCHEMY_TEST_DATABASE_URI='sqlite:///test.db'
+SERVER_NAME='localhost'
+APPLICATION_ROOT='/'
