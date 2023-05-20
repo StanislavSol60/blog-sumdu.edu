@@ -22,7 +22,7 @@ def login():
             login_user(user, remember=form.remember.data)
             return redirect(url_for('posts.my_posts'))
         flash('Invalid email or password')
-    return render_template('login.html', title='Sign In', form=form)
+    return render_template('login.html', form=form)
 
 
 @users_bp.route('/signup', methods=['GET', 'POST'])
@@ -40,14 +40,14 @@ def signup():
             db.session.commit()
             flash('Congratulations, you are now a registered user!')
             return redirect(url_for('users.login'))
-    return render_template('signup.html', title='Register', form=form)
+    return render_template('signup.html', form=form)
 
 
 @users_bp.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('posts.index'))
+    return redirect(url_for('users.login'))
 
 
 @users_bp.route('/forgot_password', methods=['GET', 'POST'])
@@ -78,9 +78,7 @@ def reset_password(token):
         return redirect(url_for('users.forgot_password'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
-        print('validate_on_submit')
         if form.password.data == form.confirm_password.data:
-            print('form.password.data == form.confirm_password.data')
             user.set_password(form.password.data)
             db.session.commit()
             flash('Your password has been reset.', 'success')
@@ -102,7 +100,6 @@ def profile():
 
         db.session.commit()
         flash('Your profile has been updated!', 'success')
-        return redirect(url_for('users.profile'))
 
     # Pre-populate the form fields with the current user's information
     form.name.data = current_user.name
@@ -110,4 +107,4 @@ def profile():
     form.date_of_birth.data = current_user.date_of_birth
     form.gender.data = current_user.gender
 
-    return render_template('profile.html', title='Edit Profile', form=form)
+    return render_template('profile.html', form=form)
