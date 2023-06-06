@@ -1,0 +1,569 @@
+{
+	"info": {
+		"_postman_id": "a5553ab0-87e1-4c1e-8fa1-6251f2abc906",
+		"name": "blog-sumdu.edu",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14499951"
+	},
+	"item": [
+		{
+			"name": "signup",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful signup\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"  var htmlResponse = pm.response.text();",
+							"  pm.expect(htmlResponse).to.include('Congratulations, you are now a registered user!');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "test@example.com",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Test User",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "testpassword",
+							"type": "text"
+						},
+						{
+							"key": "confirm_password",
+							"value": "testpassword",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/signup",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful login\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"  var htmlResponse = pm.response.text();",
+							"  pm.expect(htmlResponse).to.include('Your Profile111');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "test@example.com",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Test User",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "testpassword",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful post create\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"  var htmlResponse = pm.response.text();",
+							"  pm.expect(htmlResponse).to.include('Your post has been created!');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "Test Post",
+							"type": "text"
+						},
+						{
+							"key": "content",
+							"value": "Lorem ipsum dolor sit amet",
+							"type": "text"
+						},
+						{
+							"key": "author_id",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/create",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful post create\", () => {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"    var htmlResponse = pm.response.text();",
+							"    // Assert the presence of the success message in the HTML",
+							"    pm.expect(htmlResponse).to.include('Your post has been updated!');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "New Test Post Title",
+							"type": "text"
+						},
+						{
+							"key": "content",
+							"value": "New Test Post Content",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/1/edit",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"1",
+						"edit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful post create\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"  var expectedComment = \"This is a test comment\";",
+							"  var htmlResponse = pm.response.text();",
+							"  // Assert the presence of the changed values in the HTML response",
+							"  pm.expect(htmlResponse).to.include(expectedComment);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "content",
+							"value": "This is a test comment",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/1/add-comment",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"1",
+						"add-comment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "index",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful index\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"  var htmlResponse = pm.response.text();",
+							"  pm.expect(htmlResponse).to.include('Welcome to BlogApp');  ",
+							"  pm.expect(htmlResponse).to.include('New Test Post Title');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "my posts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful index\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"  var htmlResponse = pm.response.text();",
+							"  pm.expect(htmlResponse).to.include('Welcome to BlogApp');  ",
+							"  pm.expect(htmlResponse).to.include('New Test Post Title');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/posts",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful post create\", () => {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"    var htmlResponse = pm.response.text();",
+							"    // Assert the presence of the success message in the HTML",
+							"    pm.expect(htmlResponse).to.include('was successfully deleted!');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/1/delete",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"1",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful profile update\", () => {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"    var expectedName = \"Updated Name\";",
+							"    var expectedEmail = \"updated@example.com\";",
+							"    var expectedDate = \"1990-01-01\";",
+							"    var expectedGender = \"M\";",
+							"    var htmlResponse = pm.response.text();",
+							"    // Assert the presence of the success message in the HTML",
+							"    pm.expect(htmlResponse).to.include('Your profile has been updated!');",
+							"    // Assert the presence of the changed values in the HTML response",
+							"    pm.expect(htmlResponse).to.include('value=\"' + expectedName + '\"');",
+							"    pm.expect(htmlResponse).to.include('value=\"' + expectedEmail + '\"');",
+							"    pm.expect(htmlResponse).to.include('value=\"' + expectedDate + '\"');",
+							"    pm.expect(htmlResponse).to.include('value=\"' + expectedGender + '\"');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "updated@example.com",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Updated Name",
+							"type": "text"
+						},
+						{
+							"key": "date_of_birth",
+							"value": "1990-01-01",
+							"type": "text"
+						},
+						{
+							"key": "gender",
+							"value": "M",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/profile",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful logout\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/logout",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "forgot password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful forgot password\", () => {",
+							"    pm.expect(pm.response.code).to.eql(200);",
+							"",
+							"    var htmlResponse = pm.response.text();",
+							"    pm.expect(htmlResponse).to.include('An email with instructions to reset your password has been sent.');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "updated@example.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/forgot_password",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"forgot_password"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
