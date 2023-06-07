@@ -66,3 +66,13 @@ After running the tests, you can generate a coverage report using the following 
 
 coverage report
 This will display a detailed report showing the coverage percentage for each file.
+
+# Selenium Tests
+This project includes Selenium tests to verify the functionality through the web interface.
+
+## Running Selenium Tests
+To run the Selenium tests using pytest, execute the following command:
+
+pytest app/tests/selenium
+This command will run all the tests located in the `app/tests/selenium` directory.
+It's recommended to set up a virtual environment and install the required dependencies before running the selenium tests.
