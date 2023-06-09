@@ -3,6 +3,9 @@ FLASK_APP=app
 # set 1 to debug
 FLASK_DEBUG=0
 
+#set testing to test
+FLASK_ENV=development
+
 SECRET_KEY='secret-key-goes-here'
 SQLALCHEMY_DATABASE_URI='sqlite:///db.sqlite'
 SQLALCHEMY_TRACK_MODIFICATIONS=False

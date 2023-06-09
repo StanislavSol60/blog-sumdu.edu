@@ -10,10 +10,11 @@ login_manager = LoginManager()
 mail = Mail()
 
 
-def create_app(config_name='default'):
+def create_app(config_name=None):
     load_dotenv('.flaskenv')
 
     app = Flask(__name__)
+    env = config_name or os.getenv('FLASK_ENV', 'default')
 
     app.config.from_mapping(
         SECRET_KEY=os.getenv('SECRET_KEY'),
@@ -27,7 +28,7 @@ def create_app(config_name='default'):
         MAIL_USE_SSL=False
     )
 
-    if config_name == 'testing':
+    if env == 'testing':
         app.config.from_mapping(
             SQLALCHEMY_DATABASE_URI=os.getenv('SQLALCHEMY_TEST_DATABASE_URI'),
             SERVER_NAME=os.getenv('SERVER_NAME'),
@@ -57,6 +58,8 @@ def create_app(config_name='default'):
     app.register_blueprint(comments_bp)
 
     with app.app_context():
+        if env == 'testing':
+            db.drop_all()
         db.create_all()
 
     return app
